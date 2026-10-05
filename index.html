@@ -166,22 +166,18 @@
             <h1 class="title is-1 publication-title">MARBLE: Mamba-Attention for ROI-Conditioned BOLD Estimation</h1>
             <div class="is-size-5 publication-authors">
               <span class="author-block">
-                <a href="https://emeelkaa.github.io/" target="_blank">Emil Kim</a><sup>*</sup>,</span>
+                <a href="https://emeelkaa.github.io/" target="_blank">Emil Kim</a></span>
                 <span class="author-block">Jin Kyu Gahm</span>
                   </div>
 
                   <div class="is-size-5 publication-authors">
-                    <!-- TODO: Replace with your institution and conference/journal info -->
-                    <span class="author-block">Institution Name<br>Conference name and year</span>
-                    <!-- TODO: Remove this line if no equal contribution -->
-                    <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
+                    <span class="author-block">Pusan National University<br>MICCAI 2026</span>
                   </div>
 
                   <div class="column has-text-centered">
                     <div class="publication-links">
-                         <!-- TODO: Update with your arXiv paper ID -->
                       <span class="link-block">
-                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
+                        <a href="https://link.springer.com/chapter/10.1007/978-3-032-38239-9_33" target="_blank"
                         class="external-link button is-normal is-rounded is-dark">
                         <span class="icon">
                           <i class="fas fa-file-pdf"></i>
@@ -190,20 +186,8 @@
                       </a>
                     </span>
 
-                    <!-- TODO: Add your supplementary material PDF or remove this section -->
-                    <span class="link-block">
-                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
-                      class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon">
-                        <i class="fas fa-file-pdf"></i>
-                      </span>
-                      <span>Supplementary</span>
-                    </a>
-                  </span>
-
-                  <!-- TODO: Replace with your GitHub repository URL -->
                   <span class="link-block">
-                    <a href="https://github.com/YOUR REPO HERE" target="_blank"
+                    <a href="https://github.com/emeelkaa/marble" target="_blank"
                     class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fab fa-github"></i>
@@ -211,17 +195,6 @@
                     <span>Code</span>
                   </a>
                 </span>
-
-                <!-- TODO: Update with your arXiv paper ID -->
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
             </div>
           </div>
         </div>
@@ -231,7 +204,7 @@
 </section>
 
 
-<!-- Teaser video-->
+<!-- LATER: teaser video
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
@@ -247,7 +220,7 @@
     </div>
   </div>
 </section>
-<!-- End teaser video -->
+-->
 
 <!-- Paper abstract -->
 <section class="section hero is-light">
@@ -256,9 +229,8 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-          <!-- TODO: Replace with your paper abstract -->
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
+            Functional magnetic resonance imaging (fMRI) provides high-resolution whole-brain activity measurements but is constrained by high cost, limited accessibility, and restrictive acquisition conditions. Recent advances in cross-modal synthesis have enabled the inference of fMRI signals from electroencephalography (EEG), facilitating estimation of whole-brain activity from portable, low-cost recordings in naturalistic settings. Despite promising results, existing approaches rely on Transformer-based encoders that lack inductive biases for the causal, delayed nature of hemodynamic responses, and provide limited insight into how region-specific predictions are formed. In this paper, we propose MARBLE (Mamba-Attention for ROI-conditioned BOLD Estimation), an end-to-end framework for whole-brain EEG-to-fMRI translation. MARBLE employs a hybrid Mamba-Transformer encoder, where selective state-space modeling provides an inductive bias for HRF-related temporal structure while maintaining linear-time complexity. ROI-conditioned decoding heads operating on a shared latent representation generate region-specific BOLD time series. Our approach provides a favorable trade-off between reconstruction performance and computational efficiency, using 3.2x fewer model parameters and 2.3x less peak memory. Reconstructed functional connectivity matrices demonstrate preserved temporal dynamics and inter-regional structure, and cross-attention topographies reveal network-specific electrode contributions without explicit spatial supervision.
           </p>
         </div>
       </div>
