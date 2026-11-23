@@ -230,7 +230,7 @@
             Electroencephalography (EEG) is a portable neuroimaging modality that provides high temporal resolution and is more accessible than functional magnetic resonance imaging (fMRI). 
             Recent advances in cross-modal learning have enabled the reconstruction of spatially distributed brain activity, measured by fMRI blood-oxygen-level-dependent (BOLD) signals, from EEG. 
             However, existing whole-brain EEG-to-fMRI frameworks face challenges in efficiently modeling temporal dependencies and learning region-specific representations. 
-            To address these challenges, we propose MARBLE (Mamba–Attention for ROI-Conditioned BOLD Estimation), a lightweight framework that combines a hybrid Mamba– Transformer encoder for efficient temporal representation learning and an ROI-wise fMRI decoder that uses cross-attention to selectively attend to relevant EEG features for each region of interest. 
+            To address these challenges, we propose MARBLE (Mamba–Attention for ROI-Conditioned BOLD Estimation), a lightweight framework that combines a hybrid Mamba–Transformer encoder for efficient temporal representation learning and an ROI-wise fMRI decoder that uses cross-attention to selectively attend to relevant EEG features for each region of interest. 
             We evaluate MARBLE on resting-state and auditory-task EEG–fMRI recordings and examine the downstream utility of predicted signals for Alzheimer’s disease (AD) classification. 
             On held-out resting-state scans, MARBLE achieves superior reconstruction performance while reducing model parameters by 3.2× and peak GPU memory usage by 2.3× compared with the strongest baseline. 
             Fine-tuning the resting-state model on auditory-task recordings improves prediction performance over both zero-shot inference and training from scratch. 
@@ -245,17 +245,17 @@
 
 <!-- Modality comparison: EEG vs fMRI -->
 <section class="section" id="modalities">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
+  <div class="container">
+    <div class="columns is-centered is-vcentered has-text-centered">
+      <div class="column is-5">
         <h2 class="title is-3">EEG vs. fMRI</h2>
         <div class="modality-table-wrap">
           <table class="modality-table">
             <thead>
               <tr>
                 <th scope="col"><span class="visually-hidden">Property</span></th>
-                <th scope="col" class="eeg-col">EEG</th>
-                <th scope="col" class="fmri-col">fMRI</th>
+                <th scope="col"><span class="modality-badge eeg-badge">EEG</span></th>
+                <th scope="col"><span class="modality-badge fmri-badge">fMRI</span></th>
               </tr>
             </thead>
             <tbody>
@@ -288,10 +288,257 @@
           </table>
         </div>
       </div>
+
+      <div class="column is-7">
+        <h2 class="title is-3">Contributions</h2>
+        <ol class="contribution-list">
+          <li class="contribution-item">
+            <span class="contribution-number" aria-hidden="true">1</span>
+            <div>
+              <h3 class="contribution-title">Efficient whole-brain EEG-to-fMRI translation</h3>
+              <p class="contribution-text">
+                We introduce MARBLE, combining a hybrid Mamba–Transformer encoder with ROI-wise cross-attention to achieve competitive BOLD reconstruction with reduced model complexity and GPU memory requirements.
+              </p>
+            </div>
+          </li>
+          <li class="contribution-item">
+            <span class="contribution-number" aria-hidden="true">2</span>
+            <div>
+              <h3 class="contribution-title">Cross-condition transfer evaluation</h3>
+              <p class="contribution-text">
+                We investigate the transfer of resting-state representations to auditory-task recordings, comparing fine-tuning with zero-shot inference and training from scratch.
+              </p>
+            </div>
+          </li>
+          <li class="contribution-item">
+            <span class="contribution-number" aria-hidden="true">3</span>
+            <div>
+              <h3 class="contribution-title">Downstream evaluation of predicted BOLD signals</h3>
+              <p class="contribution-text">
+                We examine the utility of predicted BOLD FC for AD/CN classification and its complementary value when combined with conventional EEG features.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </div>
     </div>
   </div>
 </section>
+    
 <!-- End modality comparison -->
+
+<!-- Method -->
+<section class="section" id="method">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Method</h2>
+        <p class="results-intro">
+          MARBLE translates EEG into regional BOLD time series in three stages: a multi-scale spectral embedding extracts time-frequency features, a shared encoder combining temporal state-space modeling with self-attention captures dependencies across time and EEG channels, and an ROI-wise decoder uses region-specific cross-attention to predict BOLD signals.
+        </p>
+
+        <figure class="figure-card">
+          <img src="static/images/pipeline.png" loading="lazy"
+               alt="MARBLE pipeline: (i) multi-scale spectral embedding of each EEG channel, (ii) shared encoder with tMamba and Transformer blocks, (iii) ROI-wise decoder with cross-attention and regression heads producing fMRI BOLD signals.">
+          <figcaption>
+            Overview of MARBLE: (i) multi-scale spectral embedding (MSSE), (ii) shared EEG encoder, and (iii) ROI-wise fMRI decoder.
+            <span class="figure-hint">Click the figure to enlarge.</span>
+          </figcaption>
+        </figure>
+
+        <div class="method-grid">
+          <div class="method-card">
+            <span class="method-badge msse">(i)</span>
+            <h3 class="method-title">Multi-Scale Spectral Embedding</h3>
+            <p class="method-text">
+              The short-time Fourier transform is applied to each EEG channel at multiple window lengths. Scale-specific embeddings are summed, then combined with learnable channel embeddings and positional encodings.
+            </p>
+          </div>
+          <div class="method-card">
+            <span class="method-badge encoder">(ii)</span>
+            <h3 class="method-title">Shared EEG Encoder</h3>
+            <p class="method-text">
+              Temporal Mamba (tMamba) blocks process each channel’s sequence with selective state-space modeling. Features are then flattened across channels and time, and Transformer blocks capture global dependencies.
+            </p>
+          </div>
+          <div class="method-card">
+            <span class="method-badge decoder">(iii)</span>
+            <h3 class="method-title">ROI-Wise fMRI Decoder</h3>
+            <p class="method-text">
+              Each brain region has a learnable query that cross-attends to the shared EEG representation, selectively aggregating information across channels and time. An independent linear regression head per region then predicts its BOLD value.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End method -->
+
+<!-- Results -->
+<section class="section hero is-light" id="results">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Results</h2>
+        <p class="results-intro results-intro-center">
+          Quantitative comparison on six unseen resting-state test scans, reported as mean ± std.<br>
+          ↑ higher is better, ↓ lower is better.
+        </p>
+
+        <div class="metric-grid">
+          <div class="metric-card">
+            <div class="metric-label">Corr <em>r</em> ↑</div>
+            <div class="metric-value">0.436</div>
+            <div class="metric-baseline">UnEBOLT 0.412</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">MSE ↓</div>
+            <div class="metric-value">0.211</div>
+            <div class="metric-baseline">UnEBOLT 0.218</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">FC-Corr ↑</div>
+            <div class="metric-value">0.475</div>
+            <div class="metric-baseline">UnEBOLT 0.469</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">FC-F1 ↑</div>
+            <div class="metric-value">0.450</div>
+            <div class="metric-baseline">LaBraM 0.429</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Params ↓</div>
+            <div class="metric-value">2.6<span class="metric-unit">M</span></div>
+            <div class="metric-baseline">UnEBOLT 8.2 M</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Mem ↓</div>
+            <div class="metric-value">6.0<span class="metric-unit">GB</span></div>
+            <div class="metric-baseline">UnEBOLT 13.8 GB</div>
+          </div>
+        </div>
+
+        <div class="results-card">
+          <div class="results-scroll">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th scope="col">Model</th>
+                  <th scope="col">Corr <em>r</em> ↑</th>
+                  <th scope="col">MSE ↓</th>
+                  <th scope="col">FC-Corr ↑</th>
+                  <th scope="col">FC-F1 ↑</th>
+                  <th scope="col">Params ↓</th>
+                  <th scope="col">Mem ↓</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">BIOT</th>
+                  <td>0.396 ± 0.041</td>
+                  <td>0.229 ± 0.020</td>
+                  <td>0.439 ± 0.144</td>
+                  <td>0.404 ± 0.025</td>
+                  <td class="best">2.0 M</td>
+                  <td class="best">4.4 GB</td>
+                </tr>
+                <tr>
+                  <th scope="row">LaBraM</th>
+                  <td>0.179 ± 0.075</td>
+                  <td>0.250 ± 0.009</td>
+                  <td>0.359 ± 0.114</td>
+                  <td>0.429 ± 0.006</td>
+                  <td>5.8 M</td>
+                  <td>11.5 GB</td>
+                </tr>
+                <tr>
+                  <th scope="row">NeuroBOLT</th>
+                  <td>0.406 ± 0.038</td>
+                  <td>0.223 ± 0.017</td>
+                  <td>0.469 ± 0.115</td>
+                  <td>0.418 ± 0.012</td>
+                  <td>7.9 M</td>
+                  <td>13.7 GB</td>
+                </tr>
+                <tr>
+                  <th scope="row">UnEBOLT</th>
+                  <td>0.412 ± 0.049</td>
+                  <td>0.218 ± 0.019</td>
+                  <td>0.469 ± 0.093</td>
+                  <td>0.427 ± 0.016</td>
+                  <td>8.2 M</td>
+                  <td>13.8 GB</td>
+                </tr>
+                <tr class="ours">
+                  <th scope="row">MARBLE</th>
+                  <td class="best">0.436 ± 0.045</td>
+                  <td class="best">0.211 ± 0.015</td>
+                  <td class="best">0.475 ± 0.114</td>
+                  <td class="best">0.450 ± 0.016</td>
+                  <td>2.6 M</td>
+                  <td>6.0 GB</td>
+                </tr>
+                <tr class="ablation">
+                  <th scope="row">w/o ROI CA</th>
+                  <td>0.413 ± 0.040</td>
+                  <td>0.218 ± 0.019</td>
+                  <td>0.395 ± 0.084</td>
+                  <td>0.431 ± 0.018</td>
+                  <td>–</td>
+                  <td>–</td>
+                </tr>
+                <tr class="ablation">
+                  <th scope="row">w/o tMamba</th>
+                  <td>0.424 ± 0.042</td>
+                  <td class="best">0.211 ± 0.018</td>
+                  <td>0.440 ± 0.125</td>
+                  <td>0.442 ± 0.019</td>
+                  <td>–</td>
+                  <td>–</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="results-note">
+            Bold marks the best value per metric; shaded rows are ablation studies. Mem is peak GPU memory during training with a batch size of 64.
+          </p>
+        </div>
+      <figure class="figure-card">
+          <img src="static/images/boxplot.png" loading="lazy"
+               alt="Box plots of ROI-level timeseries correlation for MARBLE, UnEBOLT, NeuroBOLT and BIOT across six functional networks: visual, somatomotor, dorsal attention, salience, control and default.">
+          <figcaption>
+            <strong>MARBLE attains the highest median correlation in all six functional networks.</strong>
+            Distribution of ROI-level correlations across functional networks on unseen test scans. Center lines indicate medians, boxes represent interquartile ranges, and whiskers span the minimum and maximum values.
+          <span class="figure-hint">Click the figure to enlarge.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End results -->
+
+<!-- Functional connectivity -->
+<section class="section" id="connectivity">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Functional Connectivity</h2>
+        <figure class="figure-card">
+          <img src="static/images/fc_networks.png" loading="lazy"
+               alt="True and predicted functional connectivity matrices, and their top-25% thresholded versions, for two representative subjects, with ROIs grouped by functional network.">
+          <figcaption>
+            <strong>Predicted FC preserves the network-level block structure of the measured FC.</strong>
+            Functional connectivity reconstruction on unseen test scans. Each row shows a representative subject’s measured and predicted FC matrices, together with their thresholded counterparts retaining the strongest 25% of connections.
+            <span class="figure-hint">Click the figure to enlarge.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End functional connectivity -->
 
 
 <!-- LATER: image carousel
@@ -382,22 +629,19 @@
 
 
 
-
-<!-- Paper poster -->
+<!-- LATER: paper poster
 <section class="hero is-small is-light">
   <div class="hero-body">
     <div class="container">
-      <h2 class="title">Poster</h2>
+      <h2 class="title is-3">Poster</h2>
 
-      <!-- TODO: Replace with your poster PDF -->
       <iframe  src="static/pdfs/poster.pdf" width="100%" height="550">
           </iframe>
         
       </div>
     </div>
   </section>
-<!--End paper poster -->
-
+-->
 
 
 <!--BibTex citation -->
@@ -421,6 +665,7 @@
     </div>
 </section>
 <!--End BibTex citation -->
+</main>
 
   <!--
   <footer class="footer">

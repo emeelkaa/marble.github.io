@@ -140,3 +140,52 @@ $(document).ready(function() {
     setupVideoCarouselAutoplay();
 
 })
+
+// Figure lightbox: click a figure to zoom in over a dimmed page; click again (or press Esc) to zoom out
+function setupFigureLightbox() {
+    var images = document.querySelectorAll('.figure-card img');
+    if (images.length === 0) return;
+
+    var overlay = document.createElement('div');
+    overlay.className = 'lightbox';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Enlarged figure');
+
+    var zoomed = document.createElement('img');
+    zoomed.className = 'lightbox-img';
+    overlay.appendChild(zoomed);
+    document.body.appendChild(overlay);
+
+    function openLightbox(img) {
+        zoomed.src = img.currentSrc || img.src;
+        zoomed.alt = img.alt;
+        overlay.classList.add('open');
+        document.body.classList.add('lightbox-open');
+    }
+
+    function closeLightbox() {
+        overlay.classList.remove('open');
+        document.body.classList.remove('lightbox-open');
+    }
+
+    images.forEach(function(img) {
+        img.setAttribute('tabindex', '0');
+        img.addEventListener('click', function() { openLightbox(img); });
+        img.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openLightbox(img);
+            }
+        });
+    });
+
+    overlay.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && overlay.classList.contains('open')) {
+            closeLightbox();
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', setupFigureLightbox);
