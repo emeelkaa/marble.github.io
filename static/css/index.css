@@ -749,5 +749,79 @@ a:focus {
   }
 }
 
+  .button {
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    box-shadow: none !important;
+  }
+}
+
+
+/* EEG vs. fMRI comparison table */
+.modality-table-wrap {
+  overflow-x: auto;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+}
+
+.modality-table {
+  --eeg-color: #EFD3D7;
+  --eeg-tint: #F9EEF0;
+  --fmri-color: #FEC89A;
+  --fmri-tint: #FFEBDB;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--background-primary);
+  overflow: hidden;
+  border-radius: var(--border-radius);
+}
+
+.modality-table th,
+.modality-table td {
+  padding: 0.85rem 1.25rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+  color: var(--text-primary);
+}
+
+.modality-table thead th {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-bottom: none;
+}
+
+.modality-table thead th.eeg-col { background: var(--eeg-color); }
+.modality-table thead th.fmri-col { background: var(--fmri-color); }
+.modality-table thead th:first-child { background: var(--background-primary); }
+
+.modality-table tbody th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--background-secondary);
+  white-space: nowrap;
+}
+
+.modality-table tbody td.eeg-col { background: var(--eeg-tint); }
+.modality-table tbody td.fmri-col { background: var(--fmri-tint); }
+.modality-table tbody td { font-weight: 500; }
+.modality-table tbody tr:last-child th,
+.modality-table tbody tr:last-child td { border-bottom: none; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 480px) {
+  .modality-table th,
+  .modality-table td { padding: 0.65rem 0.75rem; font-size: 0.9rem; }
+}
 
 
