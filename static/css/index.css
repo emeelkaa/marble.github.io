@@ -852,6 +852,10 @@ a:focus {
   }
 }
 
+.results-intro-center {
+  text-align: center;
+}
+
 .metric-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -1219,4 +1223,52 @@ body.lightbox-open { overflow: hidden; }
 
 .video-card:hover {
   transform: none;
+}
+
+/* Keep containers inside a hero section at the screen width (wide tables must scroll inside their card) */
+.hero > .container {
+  width: 100%;
+}
+
+
+/* Mobile: results table + figures */
+.table-scroll-hint { display: none; }
+
+@media screen and (max-width: 768px) {
+  .table-scroll-hint {
+    display: block;
+    margin: 0;
+    padding: 0.6rem 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background: var(--background-secondary);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .results-table {
+    min-width: 0;
+    font-size: 0.85rem;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .results-table thead th,
+  .results-table tbody th,
+  .results-table tbody td { padding: 0.8rem 0.9rem; }
+
+  .results-table thead th:first-child,
+  .results-table tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--background-primary);
+    box-shadow: 1px 0 0 var(--border-color);
+  }
+
+  .results-table thead th:first-child { background: var(--background-secondary); }
+  .results-table tbody tr.ours th { background: #edeef8; }
+  .results-table tbody tr.ablation th { background: #f9eef0; }
+
+  .figure-card { padding: 1rem; }
 }
