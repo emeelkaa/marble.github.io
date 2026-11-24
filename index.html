@@ -61,6 +61,9 @@
   <!-- Favicon and App Icons -->
   <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
   <link rel="apple-touch-icon" href="static/images/favicon.ico">
+  <link rel="icon" href="static/images/favicon.ico" sizes="32x32">
+  <link rel="icon" href="static/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="static/images/apple-touch-icon.png">
   
   <!-- Critical CSS - Load synchronously -->
   <link rel="stylesheet" href="static/css/bulma.min.css">
@@ -223,7 +226,7 @@
 <section class="section hero is-light">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
+      <div class="column is-10">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
@@ -245,7 +248,7 @@
 
 <!-- Modality comparison: EEG vs fMRI -->
 <section class="section" id="modalities">
-  <div class="container">
+  <div class="container is-max-desktop">
     <div class="columns is-centered is-vcentered has-text-centered">
       <div class="column is-5">
         <h2 class="title is-3">EEG vs. fMRI</h2>
@@ -327,9 +330,27 @@
     
 <!-- End modality comparison -->
 
+<!-- Reconstruction demo -->
+<section class="section hero is-light" id="demo">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Demo</h2>
+        <figure class="figure-card video-card">
+          <video controls muted loop playsinline preload="metadata">
+            <source src="static/videos/demo.mp4#t=0.1" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End reconstruction demo -->
+
 <!-- Method -->
 <section class="section" id="method">
-  <div class="container">
+  <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-full">
         <h2 class="title is-3">Method</h2>
@@ -377,7 +398,7 @@
 
 <!-- Results -->
 <section class="section hero is-light" id="results">
-  <div class="container">
+  <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-full">
         <h2 class="title is-3">Results</h2>
@@ -521,7 +542,7 @@
 
 <!-- Functional connectivity -->
 <section class="section" id="connectivity">
-  <div class="container">
+  <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-full">
         <h2 class="title is-3">Functional Connectivity</h2>

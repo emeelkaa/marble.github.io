@@ -1207,3 +1207,16 @@ body.lightbox-open { overflow: hidden; }
 @media screen and (max-width: 900px) {
   .method-grid { grid-template-columns: 1fr; }
 }
+
+/* Demo video */
+.video-card video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius);
+  background: #000;
+}
+
+.video-card:hover {
+  transform: none;
+}
